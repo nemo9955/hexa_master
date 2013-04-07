@@ -1,11 +1,12 @@
-
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -17,7 +18,9 @@ public class Main extends BasicGame {
 
     private static String title = "hexagon";
     private int marime = 30;
-    private Input input ;
+    private Input input;
+
+    private Random zar = new Random();
 
     public Main(String title) {
         super(title);
@@ -26,7 +29,7 @@ public class Main extends BasicGame {
     public static void main(String[] args) throws SlickException {
         AppGameContainer app = new AppGameContainer(new Main(title));
         app.setDisplayMode(800, 600, false);
-        app.setTargetFrameRate(60);
+//        app.setTargetFrameRate(60);
         app.setResizable(true);
         app.setShowFPS(true);
         app.start();
@@ -34,7 +37,7 @@ public class Main extends BasicGame {
 
     @Override
     public void init(GameContainer gc) throws SlickException {
-        input=gc.getInput();
+        input = gc.getInput();
     }
 
     @Override
@@ -54,16 +57,19 @@ public class Main extends BasicGame {
     }
 
     @Override
-    public void render(GameContainer argcg0, Graphics g) throws SlickException {
+    public void render(GameContainer gc, Graphics g) throws SlickException {
         float i, j = 0, row = 1;
-        for( i = 50; i <= 300; i += pit(marime) ) {
+        for( i = 0; i <= gc.getHeight(); i += pit(marime) ) {
             if( row % 2 == 0 )
-                
-                for( j = 50; j <= 300; j += marime * 3 )
-                    hex(j, i, marime, g);
+                for( j = 0; j <= gc.getWidth()+marime; j += marime * 3 ) {
+                    g.setColor(new Color(zar.nextInt(225), zar.nextInt(225), zar.nextInt(225)));
+                    hex(j, i, marime - 2, g);
+                }
             else
-                for( j = 50; j <= 300; j += marime * 3 )
-                    hex(j+marime*1.5f, i, marime, g);
+                for( j = 0; j <= gc.getWidth()+marime; j += marime * 3 ) {
+                    g.setColor(new Color(zar.nextInt(225), zar.nextInt(225), zar.nextInt(225)));
+                    hex(j + marime * 1.5f, i, marime - 2, g);
+                }
             row++;
         }
     }
