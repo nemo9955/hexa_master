@@ -36,15 +36,17 @@ public class Main extends BasicGame {
 
     @Override
     public void render(GameContainer argcg0, Graphics g) throws SlickException {
-        for( float i = 50; i <= 300; i += pit(marime) )
-            for( int j = 50; j <= 300; j += marime * 3 ) {
-                if( (i / pit(marime)) % 2 == 0 ) {
-                    // System.out.println();
+        float i, j = 0, row = 1;
+        for( i = 50; i <= 300; i += pit(marime) ) {
+            if( row % 2 == 0 )
+                
+                for( j = 50; j <= 300; j += marime * 3 )
                     hex(j, i, marime, g);
-                } else {
-                    hex(j + pit(marime), i, marime, g);
-                }
-            }
+            else
+                for( j = 50; j <= 300; j += marime * 3 )
+                    hex(j+marime*1.5f, i, marime, g);
+            row++;
+        }
     }
 
     private void hex(float x, float y, int mar, Graphics g) {
