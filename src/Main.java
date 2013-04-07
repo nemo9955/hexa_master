@@ -1,13 +1,23 @@
+
+import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.imageout.ImageOut;
 
 public class Main extends BasicGame {
 
     private static String title = "hexagon";
     private int marime = 30;
+    private Input input ;
 
     public Main(String title) {
         super(title);
@@ -24,14 +34,23 @@ public class Main extends BasicGame {
 
     @Override
     public void init(GameContainer gc) throws SlickException {
-        // TODO Auto-generated method stub
-
+        input=gc.getInput();
     }
 
     @Override
     public void update(GameContainer gc, int delta) throws SlickException {
-        // TODO Auto-generated method stub
-
+        if( input.isKeyPressed(Input.KEY_P) ) {
+            Image target = new Image(gc.getWidth(), gc.getHeight());
+            gc.getGraphics().copyArea(target, 0, 0);
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH,mm,ss");
+            Date date = new Date();
+            File x = new File("screenshot");
+            if( !x.exists() )
+                x.mkdir();
+            String pozaTit = String.format("screenshot/screen%s.jpg", dateFormat.format(date));
+            ImageOut.write(target.getFlippedCopy(false, false), pozaTit, false);
+            target.destroy();
+        }
     }
 
     @Override
