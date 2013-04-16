@@ -12,6 +12,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.imageout.ImageOut;
 
 public class Main extends BasicGame {
@@ -29,7 +30,7 @@ public class Main extends BasicGame {
     public static void main(String[] args) throws SlickException {
         AppGameContainer app = new AppGameContainer(new Main(title));
         app.setDisplayMode(800, 600, false);
-//        app.setTargetFrameRate(60);
+        // app.setTargetFrameRate(60);
         app.setResizable(true);
         app.setShowFPS(true);
         app.start();
@@ -42,6 +43,11 @@ public class Main extends BasicGame {
 
     @Override
     public void update(GameContainer gc, int delta) throws SlickException {
+        
+        
+        
+        
+        
         if( input.isKeyPressed(Input.KEY_P) ) {
             Image target = new Image(gc.getWidth(), gc.getHeight());
             gc.getGraphics().copyArea(target, 0, 0);
@@ -58,31 +64,31 @@ public class Main extends BasicGame {
 
     @Override
     public void render(GameContainer gc, Graphics g) throws SlickException {
+
         float i, j = 0, row = 1;
         for( i = 0; i <= gc.getHeight(); i += pit(marime) ) {
             if( row % 2 == 0 )
-                for( j = 0; j <= gc.getWidth()+marime; j += marime * 3 ) {
-                    g.setColor(new Color(zar.nextInt(225), zar.nextInt(225), zar.nextInt(225)));
+                for( j = 0; j <= gc.getWidth() + marime; j += marime * 3 ) {
+                  //  g.setColor(new Color(zar.nextInt(225), zar.nextInt(225), zar.nextInt(225)));
                     hex(j, i, marime - 2, g);
                 }
             else
-                for( j = 0; j <= gc.getWidth()+marime; j += marime * 3 ) {
-                    g.setColor(new Color(zar.nextInt(225), zar.nextInt(225), zar.nextInt(225)));
+                for( j = 0; j <= gc.getWidth() + marime; j += marime * 3 ) {
+                   // g.setColor(new Color(zar.nextInt(225), zar.nextInt(225), zar.nextInt(225)));
                     hex(j + marime * 1.5f, i, marime - 2, g);
                 }
             row++;
         }
+
     }
 
     private void hex(float x, float y, int mar, Graphics g) {
-        g.drawLine(x - (mar / 2), y - pit(mar), x + (mar / 2), y - pit(mar));
-        g.drawLine(x - (mar / 2), y + pit(mar), x + (mar / 2), y + pit(mar));
+        float pcte[] = { x - (mar / 2), y - pit(mar), x + (mar / 2), y - pit(mar), x + mar, y, x + (mar / 2), y + pit(mar), x - (mar / 2), y + pit(mar), x - mar, y, x - (mar / 2), y - pit(mar) };
 
-        g.drawLine(x - mar, y, x - (mar / 2), y - pit(mar));
-        g.drawLine(x + mar, y, x + (mar / 2), y - pit(mar));
+        Polygon poly = new Polygon(pcte);
+        poly.closed();
+        g.draw(poly);
 
-        g.drawLine(x - mar, y, x - (mar / 2), y + pit(mar));
-        g.drawLine(x + mar, y, x + (mar / 2), y + pit(mar));
     }
 
     private float pit(float lun) {
