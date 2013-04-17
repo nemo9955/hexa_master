@@ -1,5 +1,7 @@
 package game;
 
+import hexa.Hexagon;
+
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -44,7 +46,7 @@ public class GameplayState extends BasicGameState {
     private void makeComb(GameContainer gc) {
 
         float i, j = 0, row = 1;
-        for( i = 0; i <= gc.getHeight(); i += pit(marime) ) {
+        for( i = 0; i <= gc.getHeight(); i += Hexagon.pit(marime) ) {
             if( row % 2 == 0 )
                 for( j = 0; j <= gc.getWidth() + marime; j += marime * 3 ) {
                     fagure.add(hex(j, i, marime - 3));
@@ -60,11 +62,7 @@ public class GameplayState extends BasicGameState {
 
     @Override
     public void update(GameContainer gc, StateBasedGame sb, int delta) throws SlickException {
-
-        for( Polygon poly : fagure ) {
-
-        }
-
+        
         if( input.isKeyPressed(Input.KEY_P) ) {
             Image target = new Image(gc.getWidth(), gc.getHeight());
             gc.getGraphics().copyArea(target, 0, 0);
@@ -88,26 +86,13 @@ public class GameplayState extends BasicGameState {
     @Override
     public void render(GameContainer gc, StateBasedGame sb, Graphics g) throws SlickException {
         g.setBackground(Color.black);
-        g.setLineWidth(4);
+        g.setLineWidth(5);
         g.setColor(Color.black);
         for( Polygon poly : fagure ) {
             g.setColor(new Color(zar.nextInt(225), zar.nextInt(225), zar.nextInt(225)));
             g.draw(poly);
         }
 
-    }
-
-    private Polygon hex(float x, float y, int mar) {
-        float pcte[] = { x - (mar / 2), y - pit(mar), x + (mar / 2), y - pit(mar), x + mar, y, x + (mar / 2), y + pit(mar), x - (mar / 2), y + pit(mar), x - mar, y, x - (mar / 2), y - pit(mar) };
-
-        Polygon poly = new Polygon(pcte);
-        poly.closed();
-
-        return poly;
-    }
-
-    private float pit(float lun) {
-        return (float) ((float) (lun / 2) * Math.sqrt(3));
     }
 
     @Override
