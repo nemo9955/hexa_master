@@ -8,8 +8,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import org.newdawn.slick.AppGameContainer;
-import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -20,6 +18,8 @@ import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.imageout.ImageOut;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+
+import diverse.Main;
 
 public class GameplayState extends BasicGameState {
 
@@ -38,18 +38,20 @@ public class GameplayState extends BasicGameState {
     @Override
     public void init(GameContainer gc, StateBasedGame sb) throws SlickException {
         input = gc.getInput();
+        makeComb(gc);
+    }
+
+    private void makeComb(GameContainer gc) {
 
         float i, j = 0, row = 1;
         for( i = 0; i <= gc.getHeight(); i += pit(marime) ) {
             if( row % 2 == 0 )
                 for( j = 0; j <= gc.getWidth() + marime; j += marime * 3 ) {
-                    // g.setColor(new Color(zar.nextInt(225), zar.nextInt(225), zar.nextInt(225)));
-                    fagure.add(hex(j, i, marime - 2));
+                    fagure.add(hex(j, i, marime - 3));
                 }
             else
                 for( j = 0; j <= gc.getWidth() + marime; j += marime * 3 ) {
-                    // g.setColor(new Color(zar.nextInt(225), zar.nextInt(225), zar.nextInt(225)));
-                    fagure.add(hex(j + marime * 1.5f, i, marime - 2));
+                    fagure.add(hex(j + marime * 1.5f, i, marime - 3));
                 }
             row++;
         }
@@ -75,12 +77,21 @@ public class GameplayState extends BasicGameState {
             ImageOut.write(target.getFlippedCopy(false, false), pozaTit, false);
             target.destroy();
         }
+
+        if( gc.getWidth() != Main.getWidth() || gc.getHeight() != Main.getHeight() ) {
+            Main.setWidth(gc.getWidth());
+            Main.setHeight(gc.getHeight());
+            makeComb(gc);
+        }
     }
 
     @Override
     public void render(GameContainer gc, StateBasedGame sb, Graphics g) throws SlickException {
-
+        g.setBackground(Color.black);
+        g.setLineWidth(4);
+        g.setColor(Color.black);
         for( Polygon poly : fagure ) {
+            g.setColor(new Color(zar.nextInt(225), zar.nextInt(225), zar.nextInt(225)));
             g.draw(poly);
         }
 

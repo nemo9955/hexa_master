@@ -1,3 +1,4 @@
+package diverse ;
 
 import game.GameplayState;
 
@@ -9,6 +10,9 @@ import org.newdawn.slick.state.StateBasedGame;
 public class Main extends StateBasedGame {
 
     private static String title = "hexagon";
+    
+    private static int width ;
+    private static int height ;
     
     private static final int GAMEPLAYSTATE = 0 ;
     
@@ -30,4 +34,22 @@ public class Main extends StateBasedGame {
         
     }
 
+    public static int getWidth() {
+        return width;
+    }
+
+    public static void setWidth(int width) {
+        Main.width = width;
+    }
+
+    public static int getHeight() {
+        return height;
+    }
+
+    public static void setHeight(int height) {
+        Main.height = height;
+    }
+
+    
+    
 }
