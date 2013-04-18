@@ -8,10 +8,12 @@ public class HexStandard extends Hexagon {
     public HexStandard(float x, float y, int marime , int id) {
         
         super(x, y, marime, id);
+        System.out.print(id);
         
     }
     
     protected void Culoare(){
+        System.out.println(" standard ");
         switch(id){
             case 1 : color = Color.red; break;
             case 2 : color = Color.blue; break;
