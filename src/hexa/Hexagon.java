@@ -29,7 +29,7 @@ public class Hexagon {
 
     public void render(GameContainer gc, StateBasedGame sb, Graphics g) {
         g.setColor(color);
- //       g.fill(poly);
+//        g.fill(poly);
         g.draw(poly);
     }
     
