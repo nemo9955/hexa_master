@@ -1,5 +1,6 @@
 package game;
 
+import hexa.HexStandard;
 import hexa.Hexagon;
 
 import java.io.File;
@@ -10,13 +11,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.imageout.ImageOut;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -29,7 +28,7 @@ public class GameplayState extends BasicGameState {
     private int marime = 30;
     private Input input;
 
-    private List<Polygon> fagure = new ArrayList<Polygon>();
+    private List<Hexagon> fagure = new ArrayList<Hexagon>();
 
     private Random zar = new Random();
 
@@ -49,11 +48,11 @@ public class GameplayState extends BasicGameState {
         for( i = 0; i <= gc.getHeight(); i += Hexagon.pit(marime) ) {
             if( row % 2 == 0 )
                 for( j = 0; j <= gc.getWidth() + marime; j += marime * 3 ) {
-                    fagure.add(hex(j, i, marime - 3));
-                }
+                    fagure.add( new HexStandard(j, i, marime-3, (1+zar.nextInt(4) ) ) );
+                } 
             else
                 for( j = 0; j <= gc.getWidth() + marime; j += marime * 3 ) {
-                    fagure.add(hex(j + marime * 1.5f, i, marime - 3));
+                    fagure.add( new HexStandard(j + marime * 1.5f , i, marime-3, (1+zar.nextInt(4) ) ) );
                 }
             row++;
         }
@@ -85,12 +84,11 @@ public class GameplayState extends BasicGameState {
 
     @Override
     public void render(GameContainer gc, StateBasedGame sb, Graphics g) throws SlickException {
-        g.setBackground(Color.black);
-        g.setLineWidth(5);
-        g.setColor(Color.black);
-        for( Polygon poly : fagure ) {
-            g.setColor(new Color(zar.nextInt(225), zar.nextInt(225), zar.nextInt(225)));
-            g.draw(poly);
+//        g.setBackground(Color.black);
+        g.setLineWidth(1);
+ //       g.setColor(Color.white);
+        for( Hexagon hexag : fagure ) {
+            hexag.render(gc, sb, g);
         }
 
     }

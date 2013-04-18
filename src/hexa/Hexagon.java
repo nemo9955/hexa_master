@@ -13,9 +13,14 @@ public class Hexagon {
     protected Image img;
     protected Polygon poly;
     protected Color color ;
+    protected int x ;
+    protected int y ;
 
-    public Hexagon(int id) {
+    public Hexagon(float x, float y, int marime , int id) {
         this.id = id;
+        setPoly(x, y, marime);
+        Culoare();
+        Imagine();
     }
 
     public void update(GameContainer gc, StateBasedGame sb, int delta) {
@@ -23,8 +28,16 @@ public class Hexagon {
     }
 
     public void render(GameContainer gc, StateBasedGame sb, Graphics g) {
-        g.fill(poly);
+ //       g.fill(poly);
         g.draw(poly);
+    }
+    
+    protected void Culoare(){
+        color = Color.white ;
+    }
+    
+    protected void Imagine(){
+        img = null ;
     }
     
     public void setPoly(float x, float y, int marime) {
