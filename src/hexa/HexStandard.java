@@ -7,7 +7,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class HexStandard extends Hexagon {
 
-    public HexStandard(float x, float y, int marime, int id) {
+    public HexStandard(int x, int y, int marime, int id) {
 
         super(x, y, marime, id);
         //        System.out.print(id);
@@ -15,19 +15,20 @@ public class HexStandard extends Hexagon {
     }
 
     public void update(GameContainer gc, StateBasedGame sb, int delta) {
-        /*if( gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON) && poly.contains(gc.getInput().getMouseX(), gc.getInput().getMouseY()) ) {
-            System.out.println(id + " " + gc.getInput().getMouseX() + " " + gc.getInput().getMouseY());
+        if( gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON) && poly.contains((float) gc.getInput().getMouseX(), (float) gc.getInput().getMouseY()) ) {
             id++;
+            System.out.println(id + " " + gc.getInput().getMouseX() + " " + gc.getInput().getMouseY());
             Culoare();
         }
         if( gc.getInput().isMousePressed(Input.MOUSE_RIGHT_BUTTON) && poly.contains(gc.getInput().getMouseX(), gc.getInput().getMouseY()) ) {
-            System.out.println(id + " " + gc.getInput().getMouseX() + " " + gc.getInput().getMouseY());
             id--;
-            Culoare();
-        }*/
-        if( gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)){
             System.out.println(id + " " + gc.getInput().getMouseX() + " " + gc.getInput().getMouseY());
+            Culoare();
         }
+        /*         if( gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)){
+                    System.out.println(id + " " + gc.getInput().getMouseX() + " " + gc.getInput().getMouseY());
+                }
+         */
     }
 
     protected void Culoare() {
@@ -52,7 +53,7 @@ public class HexStandard extends Hexagon {
                 color = Color.pink;
                 break;
             default :
-                color = Color.white;
+                color = Color.darkGray;
         }
     }
 

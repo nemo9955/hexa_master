@@ -22,7 +22,7 @@ public class Main extends StateBasedGame {
 
     public static void main(String[] args) throws SlickException {
         AppGameContainer app = new AppGameContainer(new Main(title));
-        app.setDisplayMode(800, 600, false);
+        app.setDisplayMode(500, 500, false);
         app.setResizable(true);
         app.setShowFPS(true);
         app.start();

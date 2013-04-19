@@ -16,7 +16,7 @@ public class Hexagon {
     protected int x ;
     protected int y ;
 
-    public Hexagon(float x, float y, int marime , int id) {
+    public Hexagon(int x, int y, int marime , int id) {
         this.id = id;
         setPoly(x, y, marime);
         Culoare();
@@ -29,7 +29,7 @@ public class Hexagon {
 
     public void render(GameContainer gc, StateBasedGame sb, Graphics g) {
         g.setColor(color);
-//        g.fill(poly);
+        g.fill(poly);
         g.draw(poly);
     }
     
@@ -42,10 +42,12 @@ public class Hexagon {
         img = null ;
     }
     
-    public void setPoly(float x, float y, int marime) {
-        float pcte[] = { x - (marime / 2), y - pit(marime), x + (marime / 2), y - pit(marime), x + marime, y, x + (marime / 2), y + pit(marime), x - (marime / 2), y + pit(marime), x - marime, y, x - (marime / 2), y - pit(marime) };
+    public void setPoly(int x, int y, int marime) {
+        float pcte[] = { x - (marime / 2), y - pit(marime) , x + (marime / 2), y - pit(marime), x + marime, y, x + (marime / 2), y + pit(marime), x - (marime / 2), y + pit(marime), x - marime, y};
+       
         poly = new Polygon(pcte);
-        poly.closed();
+        poly.setClosed(true);
+        poly.setAllowDuplicatePoints(false);
     }
 
     public static float pit(float lun) {

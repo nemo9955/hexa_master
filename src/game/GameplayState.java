@@ -29,6 +29,7 @@ public class GameplayState extends BasicGameState {
     private Input input;
 
     private List<Hexagon> fagure = new ArrayList<Hexagon>();
+    private Hexagon fagur[][] ;
 
     private Random zar = new Random();
 
@@ -44,16 +45,17 @@ public class GameplayState extends BasicGameState {
 
     private void makeComb(GameContainer gc) {
 
-        float i, j = 0, row = 1;
-        for( i = 0; i <= gc.getHeight(); i += Hexagon.pit(marime) ) {
-            if( row % 2 == 0 )
-                for( j = 0; j <= gc.getWidth() + marime; j += marime * 3 ) {
-                    fagure.add( new HexStandard(j, i, marime-5, (1+zar.nextInt(6) ) ) );
-                } 
-            else
-                for( j = 0; j <= gc.getWidth() + marime; j += marime * 3 ) {
-                    fagure.add( new HexStandard(j + marime * 1.5f , i, marime-5, (1+zar.nextInt(6) ) ) );
-                }
+        fagur = new Hexagon[gc.getWidth()][gc.getHeight()];
+        
+        fagure.clear();
+        int i, j = 0, row = 2;
+        for( i = (int) Hexagon.pit(marime); i <= gc.getHeight() - Hexagon.pit(marime); i += Hexagon.pit(marime) ) {
+            for( j = marime; j <= gc.getWidth() - marime ; j += marime * 3f ) {
+                if( row % 2 == 0 )
+                    fagure.add(new HexStandard(j, i, marime - 5, (1 + zar.nextInt(6))));
+                else
+                    fagure.add(new HexStandard((int) (j + marime * 1.5f), i, marime - 5, (1 + zar.nextInt(6))));
+            }
             row++;
         }
 
@@ -61,11 +63,11 @@ public class GameplayState extends BasicGameState {
 
     @Override
     public void update(GameContainer gc, StateBasedGame sb, int delta) throws SlickException {
-        
-        for( Hexagon hexag : fagure ) {
-            hexag.update(gc, sb, delta);
+
+        for( int i = 0; i < fagure.size(); i++ ) {
+            fagure.get(i).update(gc, sb, delta);
         }
-        
+
         if( input.isKeyPressed(Input.KEY_P) ) {
             Image target = new Image(gc.getWidth(), gc.getHeight());
             gc.getGraphics().copyArea(target, 0, 0);
@@ -88,9 +90,9 @@ public class GameplayState extends BasicGameState {
 
     @Override
     public void render(GameContainer gc, StateBasedGame sb, Graphics g) throws SlickException {
-//        g.setBackground(Color.black);
-        g.setLineWidth(5);
- //       g.setColor(Color.white);
+        //        g.setBackground(Color.black);
+        g.setLineWidth(1);
+        //       g.setColor(Color.white);
         for( Hexagon hexag : fagure ) {
             hexag.render(gc, sb, g);
         }
