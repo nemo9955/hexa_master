@@ -26,6 +26,8 @@ public class Main extends StateBasedGame {
         app.setResizable(true);
         app.setShowFPS(true);
         app.start();
+        setWidth(app.getWidth());
+        setHeight(app.getHeight());
     }
 
     @Override
