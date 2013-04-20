@@ -23,7 +23,7 @@ import diverse.Main;
 public class GameplayState extends BasicGameState {
 
     private int ID;
-    private int marime = 50;
+    private int marime = 10;
     private Input input;
 
     private Hexagon fagur[][];
@@ -41,7 +41,7 @@ public class GameplayState extends BasicGameState {
     public void init(GameContainer gc, StateBasedGame sb) throws SlickException {
         input = gc.getInput();
         makeComb(gc);
-        System.out.println(Hexagon.pit(marime));
+//        System.out.println(Hexagon.pit(marime));
     }
 
     private void makeComb(GameContainer gc) {
@@ -50,7 +50,7 @@ public class GameplayState extends BasicGameState {
         inalt = (int) Math.floor( gc.getHeight() / (Hexagon.pit(marime) ) )+1;
         diferit = inalt%2==1 ;
         
-        System.out.println( inalt );
+//        System.out.println( inalt );
         
         inalt /= 2;
         inalt -= (diferit? 0 : 1 ) ;
@@ -65,7 +65,7 @@ public class GameplayState extends BasicGameState {
                 else
                     fagur[j][i] = new HexStandard((int) (marime + (marime * 1.5f * j) ), 
                                                   (int) ( (j % 2 == 0) ? Hexagon.pit(marime) + (Hexagon.pit(marime)*2 * i ) :  Hexagon.pit(marime)*2 + (Hexagon.pit(marime)*2 * i)  ) ,
-                                                   marime - 5, (1 + zar.nextInt(6)));
+                                                   marime - 1, 2 , j , i);
             }
 
     }

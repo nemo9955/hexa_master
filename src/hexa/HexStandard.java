@@ -7,32 +7,35 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class HexStandard extends Hexagon {
 
-    public HexStandard(int x, int y, int marime, int id) {
+    public HexStandard(int x, int y, int marime, int id, int pozx, int pozy) {
 
-        super(x, y, marime, id);
+        super(x, y, marime, id, pozx, pozy);
         //        System.out.print(id);
 
     }
 
     public void update(GameContainer gc, StateBasedGame sb, int delta) {
-        if( gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON) && poly.contains((float) gc.getInput().getMouseX(), (float) gc.getInput().getMouseY()) ) {
-            id++;
-            System.out.println(id + " " + gc.getInput().getMouseX() + " " + gc.getInput().getMouseY());
-            Culoare();
-        }
-        if( gc.getInput().isMousePressed(Input.MOUSE_RIGHT_BUTTON) && poly.contains(gc.getInput().getMouseX(), gc.getInput().getMouseY()) ) {
-            id--;
-            System.out.println(id + " " + gc.getInput().getMouseX() + " " + gc.getInput().getMouseY());
-            Culoare();
-        }
-        /*         if( gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)){
-                    System.out.println(id + " " + gc.getInput().getMouseX() + " " + gc.getInput().getMouseY());
-                }
-         */
+        if( poly.contains((float) gc.getInput().getMouseX(), (float) gc.getInput().getMouseY()) )
+            if( gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON) ) {
+                id++;
+                //                System.out.println(id + " " + poly.getCenterX() + " " + poly.getCenterY());
+                Culoare();
+            }
+        if( poly.contains((float) gc.getInput().getMouseX(), (float) gc.getInput().getMouseY()) )
+            if( gc.getInput().isMousePressed(Input.MOUSE_RIGHT_BUTTON) ) {
+                id--;
+                //                System.out.println(id + " " + poly.getCenterX() + " " + poly.getCenterY());
+                Culoare();
+            }
     }
 
     protected void Culoare() {
         //        System.out.println(" standard ");
+        if( id > 0 )
+            color = Color.darkGray;
+        else
+            color = Color.lightGray;
+
         switch ( id ) {
             case 1 :
                 color = Color.red;
@@ -52,8 +55,6 @@ public class HexStandard extends Hexagon {
             case 6 :
                 color = Color.pink;
                 break;
-            default :
-                color = Color.darkGray;
         }
     }
 

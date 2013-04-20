@@ -16,8 +16,13 @@ public class Hexagon {
     protected int x ;
     protected int y ;
     protected boolean exist ;
+    
+    protected int pozx;
+    protected int pozy;
 
-    public Hexagon(int x, int y, int marime , int id) {
+    public Hexagon(int x, int y, int marime , int id , int pozx  ,int pozy) {
+        this.pozx=pozx;
+        this.pozy=pozy;
         this.id = id;
         setPoly(x, y, marime);
         Culoare();
@@ -37,10 +42,13 @@ public class Hexagon {
         g.setColor(color);
         g.fill(poly);
         g.draw(poly);
+//        g.setColor(Color.white);
+//        g.setLineWidth(1);
+//        g.drawString("mere", x+25, y+25) ;
     }
     
     protected void Culoare(){
-        System.out.println("default");
+//        System.out.println("default");
         color = Color.white ;
     }
     
