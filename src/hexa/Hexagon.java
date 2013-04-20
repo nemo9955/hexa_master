@@ -15,12 +15,18 @@ public class Hexagon {
     protected Color color ;
     protected int x ;
     protected int y ;
+    protected boolean exist ;
 
     public Hexagon(int x, int y, int marime , int id) {
         this.id = id;
         setPoly(x, y, marime);
         Culoare();
         Imagine();
+        setExist(true);
+    }
+    
+    public Hexagon() {
+        setExist(false);
     }
 
     public void update(GameContainer gc, StateBasedGame sb, int delta) {
@@ -81,4 +87,13 @@ public class Hexagon {
     public Polygon getPoly() {
         return poly;
     }
+    
+    public boolean isExist() {
+        return exist;
+    }
+    
+    public void setExist(boolean exist) {
+        this.exist = exist;
+    }
+    
 }

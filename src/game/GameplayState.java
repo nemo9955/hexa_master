@@ -29,6 +29,7 @@ public class GameplayState extends BasicGameState {
     private Hexagon fagur[][];
     private int lat;
     private int inalt;
+    private boolean diferit;
 
     private Random zar = new Random();
 
@@ -40,37 +41,32 @@ public class GameplayState extends BasicGameState {
     public void init(GameContainer gc, StateBasedGame sb) throws SlickException {
         input = gc.getInput();
         makeComb(gc);
+        System.out.println(Hexagon.pit(marime));
     }
 
     private void makeComb(GameContainer gc) {
 
-        lat = (int) (Math.floor(gc.getWidth() / (marime * 1.5f)))/2;
-        inalt = (int) (gc.getHeight() /  marime);
+        lat   = (int) Math.floor( gc.getWidth() / (marime * 1.5f) ) - 1 + (int) Math.floor( gc.getWidth() / ((((int)( gc.getWidth() / ( marime * 1.5f ))) * (marime * 1.5f ))+ marime/2) );
+        inalt = (int) Math.floor( gc.getHeight() / (Hexagon.pit(marime) ) )+1;
+        diferit = inalt%2==1 ;
+        
+        System.out.println( inalt );
+        
+        inalt /= 2;
+        inalt -= (diferit? 0 : 1 ) ;
 
         fagur = new Hexagon[lat][inalt];
 
-        System.out.println(lat + " " + inalt);
 
         for( int i = 0; i < inalt; i++ )
             for( int j = 0; j < lat; j++ ) {
-                //                System.out.println(j + " " + i);
-                if( i % 2 == 1 )
-                    fagur[j][i] = new HexStandard((int) marime + (marime * 3 * j), (int) (Hexagon.pit(marime) + (Hexagon.pit(marime) * i)), marime - 5, (1 + zar.nextInt(6)));
+                if( diferit && i==inalt-1 &&  j%2==1 )
+                    fagur[j][i] = new Hexagon();
                 else
-                    fagur[j][i] = new HexStandard((int) (((int) marime + (marime * 3 * j)) + marime*1.5f), (int) (Hexagon.pit(marime) + (Hexagon.pit(marime) * i)), marime - 5, (1 + zar.nextInt(6)));
+                    fagur[j][i] = new HexStandard((int) (marime + (marime * 1.5f * j) ), 
+                                                  (int) ( (j % 2 == 0) ? Hexagon.pit(marime) + (Hexagon.pit(marime)*2 * i ) :  Hexagon.pit(marime)*2 + (Hexagon.pit(marime)*2 * i)  ) ,
+                                                   marime - 5, (1 + zar.nextInt(6)));
             }
-
-        /* fagure.clear();
-         int i, j = 0, row = 2;
-         for( i = (int) Hexagon.pit(marime); i <= gc.getHeight() - Hexagon.pit(marime); i += Hexagon.pit(marime) ) {
-             for( j = marime; j <= gc.getWidth() - marime; j += marime * 3f ) {
-                 if( row % 2 == 0 )
-                     fagure.add(new HexStandard(j, i, marime - 5, (1 + zar.nextInt(6))));
-                 else
-                     fagure.add(new HexStandard((int) (j + marime * 1.5f), i, marime - 5, (1 + zar.nextInt(6))));
-             }
-             row++;
-         }*/
 
     }
 
@@ -79,7 +75,8 @@ public class GameplayState extends BasicGameState {
 
         for( int i = 0; i < inalt; i++ )
             for( int j = 0; j < lat; j++ ) {
-                fagur[j][i].update(gc, sb, delta);
+                if(fagur[j][i].isExist())
+                    fagur[j][i].update(gc, sb, delta);
             }
 
         if( input.isKeyPressed(Input.KEY_P) ) {
@@ -98,7 +95,7 @@ public class GameplayState extends BasicGameState {
         if( gc.getWidth() != Main.getWidth() || gc.getHeight() != Main.getHeight() ) {
             Main.setWidth(gc.getWidth());
             Main.setHeight(gc.getHeight());
-//            System.out.println("update");
+            //            System.out.println("update");
             makeComb(gc);
         }
     }
@@ -110,7 +107,8 @@ public class GameplayState extends BasicGameState {
         //       g.setColor(Color.white);
         for( int i = 0; i < inalt; i++ )
             for( int j = 0; j < lat; j++ ) {
-                fagur[j][i].render(gc, sb, g);
+                if(fagur[j][i].isExist())
+                    fagur[j][i].render(gc, sb, g);
             }
 
     }
