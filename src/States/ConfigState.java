@@ -1,49 +1,52 @@
 package States;
 
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Font;
+import java.util.ArrayList;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.TrueTypeFont;
-import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import diverse.Main;
+import diverse.ManipImage;
+import diverse.TextFieldHandeler;
+
 public class ConfigState extends BasicGameState {
-    
-    private int ID ;
-    
-    private TextField text1 ;
+
+    private int ID;
+    private ManipImage start;
+
+    private ArrayList<TextFieldHandeler> text = new ArrayList<TextFieldHandeler>();
 
     public ConfigState(int ID) {
-        this.ID=ID;
+        this.ID = ID;
     }
 
     @Override
     public void init(GameContainer gc, StateBasedGame sb) throws SlickException {
-        Font font = new TrueTypeFont(new java.awt.Font(java.awt.Font.SERIF,java.awt.Font.BOLD , 26), false);
-        text1 = new TextField(gc,font, 30, 30, 100, 40);
-        text1.setText("cevkhgbszd");
-        text1.setTextColor(Color.white);
-        text1.setBackgroundColor(Color.blue);
-        text1.setAcceptingInput(true);
-        text1.setBorderColor(Color.red);
-        text1.setInput(gc.getInput());
-        text1.setMaxLength(5);
+        text.add(new TextFieldHandeler(gc, 400, 100, "Marime hexagon:"));
+        text.add(new TextFieldHandeler(gc, 400, 150, "Distanta dintre hexagoane:"));
+        start = new ManipImage(100, 300, 200, 50);
     }
 
     @Override
     public void update(GameContainer gc, StateBasedGame sb, int delta) throws SlickException {
-        if(gc.getInput().isKeyPressed(Input.KEY_ENTER)){
-            System.out.println(text1.getText());
+        for( TextFieldHandeler elem : text ) {
+            elem.update(gc);
         }
+        if( start.inZon(gc.getInput().getMouseX(), gc.getInput().getMouseY()) )
+            if( gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON) )
+                sb.enterState(Main.GAMEPLAYSTATE);
     }
 
     @Override
     public void render(GameContainer gc, StateBasedGame sb, Graphics g) throws SlickException {
-        text1.render(gc, g);
+        for( TextFieldHandeler elem : text ) {
+            elem.render(gc, g);
+        }
+        start.render(g);
     }
 
     @Override

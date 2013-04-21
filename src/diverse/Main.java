@@ -16,8 +16,8 @@ public class Main extends StateBasedGame {
     private static int width ;
     private static int height ;
     
-    private static final int CONFIGSTATE = 0 ;
-    private static final int GAMEPLAYSTATE = 1 ;
+    public static final int CONFIGSTATE = 0 ;
+    public static final int GAMEPLAYSTATE = 1 ;
     
     public Main(String title) {
         super(title);
