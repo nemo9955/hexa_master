@@ -18,12 +18,12 @@ import org.newdawn.slick.imageout.ImageOut;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import diverse.ConfigReader;
 import diverse.Main;
 
 public class GameplayState extends BasicGameState {
 
     private int ID;
-    private int marime = 10;
     private Input input;
 
     private Hexagon fagur[][];
@@ -32,40 +32,51 @@ public class GameplayState extends BasicGameState {
     private boolean diferit;
 
     private Random zar = new Random();
+    private ConfigReader cfg = new ConfigReader();
+    
+    
+    private int marime = 50;
+    private int distanta = 1;
 
     public GameplayState(int ID) {
         this.ID = ID;
+    }
+    
+    public void enter(GameContainer gc, StateBasedGame sb) throws SlickException {
+        loadConfig();
     }
 
     @Override
     public void init(GameContainer gc, StateBasedGame sb) throws SlickException {
         input = gc.getInput();
         makeComb(gc);
-//        System.out.println(Hexagon.pit(marime));
+    }
+    
+    private void loadConfig(){
+        
+        marime = Integer.parseInt( cfg.getProperty("marime") );
+        distanta = Integer.parseInt( cfg.getProperty("distanta") );
     }
 
     private void makeComb(GameContainer gc) {
 
-        lat   = (int) Math.floor( gc.getWidth() / (marime * 1.5f) ) - 1 + (int) Math.floor( gc.getWidth() / ((((int)( gc.getWidth() / ( marime * 1.5f ))) * (marime * 1.5f ))+ marime/2) );
-        inalt = (int) Math.floor( gc.getHeight() / (Hexagon.pit(marime) ) )+1;
-        diferit = inalt%2==1 ;
-        
-//        System.out.println( inalt );
-        
+        lat = (int) Math.floor(gc.getWidth() / (marime * 1.5f)) - 1 + (int) Math.floor(gc.getWidth() / ((((int) (gc.getWidth() / (marime * 1.5f))) * (marime * 1.5f)) + marime / 2));
+        inalt = (int) Math.floor(gc.getHeight() / (Hexagon.pit(marime))) + 1;
+        diferit = inalt % 2 == 1;
+
+        //        System.out.println( inalt );
+
         inalt /= 2;
-        inalt -= (diferit? 0 : 1 ) ;
+        inalt -= (diferit ? 0 : 1);
 
         fagur = new Hexagon[lat][inalt];
 
-
         for( int i = 0; i < inalt; i++ )
             for( int j = 0; j < lat; j++ ) {
-                if( diferit && i==inalt-1 &&  j%2==1 )
+                if( diferit && i == inalt - 1 && j % 2 == 1 )
                     fagur[j][i] = new Hexagon();
                 else
-                    fagur[j][i] = new HexStandard((int) (marime + (marime * 1.5f * j) ), 
-                                                  (int) ( (j % 2 == 0) ? Hexagon.pit(marime) + (Hexagon.pit(marime)*2 * i ) :  Hexagon.pit(marime)*2 + (Hexagon.pit(marime)*2 * i)  ) ,
-                                                   marime - 1, 2 , j , i);
+                    fagur[j][i] = new HexStandard((int) (marime + (marime * 1.5f * j)), (int) ((j % 2 == 0) ? Hexagon.pit(marime) + (Hexagon.pit(marime) * 2 * i) : Hexagon.pit(marime) * 2 + (Hexagon.pit(marime) * 2 * i)), marime - distanta, (1 + zar.nextInt(6)), j, i);
             }
 
     }
@@ -75,7 +86,7 @@ public class GameplayState extends BasicGameState {
 
         for( int i = 0; i < inalt; i++ )
             for( int j = 0; j < lat; j++ ) {
-                if(fagur[j][i].isExist())
+                if( fagur[j][i].isExist() )
                     fagur[j][i].update(gc, sb, delta);
             }
 
@@ -107,7 +118,7 @@ public class GameplayState extends BasicGameState {
         //       g.setColor(Color.white);
         for( int i = 0; i < inalt; i++ )
             for( int j = 0; j < lat; j++ ) {
-                if(fagur[j][i].isExist())
+                if( fagur[j][i].isExist() )
                     fagur[j][i].render(gc, sb, g);
             }
 

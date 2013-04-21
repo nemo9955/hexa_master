@@ -15,19 +15,35 @@ public class HexStandard extends Hexagon {
     }
 
     public void update(GameContainer gc, StateBasedGame sb, int delta) {
-        if( poly.contains((float) gc.getInput().getMouseX(), (float) gc.getInput().getMouseY()) )
+        if( poly.contains((float) gc.getInput().getMouseX(), (float) gc.getInput().getMouseY()) ) {
+            
             if( gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON) ) {
-                id++;
+                id ++;
                 //                System.out.println(id + " " + poly.getCenterX() + " " + poly.getCenterY());
                 Culoare();
             }
-        if( poly.contains((float) gc.getInput().getMouseX(), (float) gc.getInput().getMouseY()) )
+            
             if( gc.getInput().isMousePressed(Input.MOUSE_RIGHT_BUTTON) ) {
                 id--;
                 //                System.out.println(id + " " + poly.getCenterX() + " " + poly.getCenterY());
                 Culoare();
             }
+            
+        }
+        if( poly.contains((float) gc.getInput().getMouseX(), (float) gc.getInput().getMouseY()) )
+            if( gc.getInput().isMousePressed(Input.MOUSE_MIDDLE_BUTTON) ) {
+
+            }
     }
+    
+ /*   public void render(GameContainer gc, StateBasedGame sb, Graphics g) {
+        g.setColor(color);
+        g.fill(poly);
+        g.draw(poly);
+        g.setColor(Color.white);
+        g.setLineWidth(1);
+        g.drawString("mere", x+25, y+25) ;
+    }*/
 
     protected void Culoare() {
         //        System.out.println(" standard ");
