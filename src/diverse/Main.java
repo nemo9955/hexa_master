@@ -7,6 +7,8 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import States.ConfigState;
+
 public class Main extends StateBasedGame {
 
     private static String title = "hexagon";
@@ -14,7 +16,8 @@ public class Main extends StateBasedGame {
     private static int width ;
     private static int height ;
     
-    private static final int GAMEPLAYSTATE = 0 ;
+    private static final int CONFIGSTATE = 0 ;
+    private static final int GAMEPLAYSTATE = 1 ;
     
     public Main(String title) {
         super(title);
@@ -32,6 +35,7 @@ public class Main extends StateBasedGame {
 
     @Override
     public void initStatesList(GameContainer arg0) throws SlickException {
+        addState(new ConfigState(CONFIGSTATE));
         addState(new GameplayState(GAMEPLAYSTATE));
         
     }
