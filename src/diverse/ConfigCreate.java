@@ -19,16 +19,16 @@ public class ConfigCreate {
         x.format("# aspectul fagurelui\n\n");
         
         x.format("# marimea unui hexagon\n");
-        x.format("marime = 40\n\n");
+        x.format(String.format("marime = %d\n\n", 50));
         
         x.format("# distanta dintre hexagoane , 0 inseamna ca nu exista nici un spatiu intre hexagoane\n");
-        x.format("distanta = 5\n\n");
+        x.format(String.format("distanta = %d\n\n", 5));
         
         x.format("# id-ul / culoarea hexagonului sa fie aleatorie\n");
-        x.format("random = false\n\n");
+        x.format(String.format("random = %b\n\n", true));
         
         x.format("# daca id-ul nu e aleatoriu , selectati un id default\n");
-        x.format("id_def = 5\n\n");
+        x.format(String.format("id_def = %d\n\n", 5));
     }
 
     public void closeFile() {
@@ -39,6 +39,11 @@ public class ConfigCreate {
         File cfg_is = new File("Config/fagure.cfg");
         return cfg_is.exists();
 
+    }
+    
+    public void delCfg(){
+        File cfg_is = new File("Config/fagure.cfg");
+         cfg_is.delete();
     }
 
 }

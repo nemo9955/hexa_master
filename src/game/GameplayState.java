@@ -67,12 +67,17 @@ public class GameplayState extends BasicGameState {
         }
 
 
+        try{
         ConfigReader cfg = new ConfigReader();
         color_rand = Boolean.parseBoolean(cfg.getProperty("random"));
         marime = Integer.parseInt(cfg.getProperty("marime"));
         distanta = Integer.parseInt(cfg.getProperty("distanta"));
         if( !color_rand )
             id_default = Integer.parseInt(cfg.getProperty("id_def"));
+        } catch(Exception e){
+            cc.delCfg();
+            loadConfig();
+        }
 
     }
 
