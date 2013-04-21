@@ -18,6 +18,7 @@ import org.newdawn.slick.imageout.ImageOut;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import diverse.ConfigCreate;
 import diverse.ConfigReader;
 import diverse.Main;
 
@@ -32,16 +33,16 @@ public class GameplayState extends BasicGameState {
     private boolean diferit;
 
     private Random zar = new Random();
-    private ConfigReader cfg = new ConfigReader();
-    
-    
+
     private int marime = 50;
     private int distanta = 1;
+    private boolean color_rand = true;
+    private int id_default = 6;
 
     public GameplayState(int ID) {
         this.ID = ID;
     }
-    
+
     public void enter(GameContainer gc, StateBasedGame sb) throws SlickException {
         loadConfig();
     }
@@ -51,11 +52,28 @@ public class GameplayState extends BasicGameState {
         input = gc.getInput();
         makeComb(gc);
     }
-    
-    private void loadConfig(){
+
+    private void loadConfig() {
         
-        marime = Integer.parseInt( cfg.getProperty("marime") );
-        distanta = Integer.parseInt( cfg.getProperty("distanta") );
+        File x = new File("Config");
+        if( !x.exists() )
+            x.mkdir();
+        
+        ConfigCreate cc = new ConfigCreate();
+        if( !cc.hasCfg() ) {
+            cc.openFile();
+            cc.addRecords();
+            cc.closeFile();
+        }
+
+
+        ConfigReader cfg = new ConfigReader();
+        color_rand = Boolean.parseBoolean(cfg.getProperty("random"));
+        marime = Integer.parseInt(cfg.getProperty("marime"));
+        distanta = Integer.parseInt(cfg.getProperty("distanta"));
+        if( !color_rand )
+            id_default = Integer.parseInt(cfg.getProperty("id_def"));
+
     }
 
     private void makeComb(GameContainer gc) {
@@ -76,7 +94,7 @@ public class GameplayState extends BasicGameState {
                 if( diferit && i == inalt - 1 && j % 2 == 1 )
                     fagur[j][i] = new Hexagon();
                 else
-                    fagur[j][i] = new HexStandard((int) (marime + (marime * 1.5f * j)), (int) ((j % 2 == 0) ? Hexagon.pit(marime) + (Hexagon.pit(marime) * 2 * i) : Hexagon.pit(marime) * 2 + (Hexagon.pit(marime) * 2 * i)), marime - distanta, (1 + zar.nextInt(6)), j, i);
+                    fagur[j][i] = new HexStandard((int) (marime + (marime * 1.5f * j)), (int) ((j % 2 == 0) ? Hexagon.pit(marime) + (Hexagon.pit(marime) * 2 * i) : Hexagon.pit(marime) * 2 + (Hexagon.pit(marime) * 2 * i)), marime - distanta, (color_rand ? (1 + zar.nextInt(6)) : id_default), j, i);
             }
 
     }
