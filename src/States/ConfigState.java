@@ -28,6 +28,8 @@ public class ConfigState extends BasicGameState {
     public void init(GameContainer gc, StateBasedGame sb) throws SlickException {
         text.add(new TextFieldHandeler(gc, 400, 100, "Marime hexagon:"));
         text.add(new TextFieldHandeler(gc, 400, 150, "Distanta dintre hexagoane:"));
+        text.add(new TextFieldHandeler(gc, 400, 200, "Id default:"));
+        text.add(new TextFieldHandeler(gc, 400, 250, "Id default:"));
         start = new ManipImage(100, 300, 200, 50);
     }
 

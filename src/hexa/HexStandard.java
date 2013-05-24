@@ -21,11 +21,13 @@ public class HexStandard extends Hexagon {
                 id ++;
                 //                System.out.println(id + " " + poly.getCenterX() + " " + poly.getCenterY());
                 Culoare();
+                System.out.println("HexStandard.update() creste id-ul");
             }
             
             if( gc.getInput().isMousePressed(Input.MOUSE_RIGHT_BUTTON) ) {
                 id--;
                 //                System.out.println(id + " " + poly.getCenterX() + " " + poly.getCenterY());
+                System.out.println("HexStandard.update() scade id-ul");
                 Culoare();
             }
             
